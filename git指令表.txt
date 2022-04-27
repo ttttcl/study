@@ -1,0 +1,59 @@
+1.在当前目录新建一个git代码库
+git init
+
+2.克隆远程仓库
+git clone [url远程仓库地址]
+
+3.显示当前git的配置
+git config --list
+
+4.设置提交代码时的用户信息
+git config --global user.name '名字'
+git config --global user.email '邮箱'
+: --global 为全局设置
+
+5.将工作区的文件添加至暂存区
+git add .
+
+6.将暂存区的文件提交到本地库
+git commit -m 'message'
+
+7.查看分支信息
+git branch
+
+8.新建一个分支，并切换到该分支
+git checkout -b [分支名]
+
+9.切换到指定分支
+git checkout [branch name]
+
+10.合并指定分支到当前分支
+git merge [branch name]
+
+11.删除分支
+git branch -d [branch name]
+
+12.查看有变更的文件信息
+git status
+
+13.查看当前分支的操作日志
+git log
+
+14.下载远程仓库的所有变动
+git fetch [remote]
+
+15.显示所有远程仓库
+git remote -v
+
+16.增加一个远程仓库，并命名
+git remote add [name] [url远程仓库地址]
+
+17.取回远程仓库的变化，并合并（等于fetch+merge）
+git pull [remote] [branch]
+
+18.将所有分支推送到远程仓库
+git push [remote] -all
+
+19.重置到某次commit
+git reset [commit]
+
