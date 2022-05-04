@@ -98,3 +98,113 @@ path <string> 必选参数，表示一个路径的字符串
 fs.writeFile() 方法只能用来创建文件，不能用来创建路径
 
 重复调用 fs.writeFile() 写入同一个文件，新写入的内容会覆盖之前的旧内容
+
+#### 4.http模块
+
+http 模块是 Node.js 官方提供的、用来创建 web 服务器的模块
+
+注意：使用 http 模块创建 Web 服务器，则需要先导入它:
+
+const http = require('http')
+
+###### 1.创建 web 服务器的基本步骤
+
+① 导入 http 模块
+
+```
+const http = require('http')
+```
+
+② 创建 web 服务器实例
+
+```
+const server = http.createServer()
+```
+
+③ 为服务器实例绑定 request 事件，监听客户端的需求
+
+```
+server.on('request',(req,res)=>{
+//只要有客户端来请求，就会触发request 事件，从而调用这个事件处理函数
+
+//req 是请求对象，它包含了与客户端相关的数据和属性，例如：
+//req.url 是客户端请求的 URL 地址
+//req.method 是客户端的 method 请求类型
+
+//res 是响应对象，它包含了与服务器相关的数据和属性，例如：
+const str='123'
+//为了防止中文乱码的问题，需要设置请求头 Content-Type 的值为 text/html;charset=utf-8
+res.setHeader('Content-Type','text/html;charset=utf-9')
+//res.end() 方法的作用：
+//向客户端发送指定的内容，并结束这次请求的处理过程
+res.end(str)
+})
+```
+
+④ 启动服务器
+
+```
+server.listen(80,()=>{
+
+})
+```
+
+#### 5.模块化的基本概念
+
+**模块化**是指解决一个复杂问题时，自顶向下逐层把系统划分成若干模块的过程。对于整个系统来说，模块是可组合、分解和更换的单元。
+
+#### 6.Node.js 中的模块化
+
+Node.js 中根据模块来源的不同，分为 3 大类，分别是：
+
+- 内置模块（内置模块是由 Node.js 官方提供的，例如：fs、path、http等）
+- 自定义模块（用户创建的每个 .js 文件，都是自定义模块）
+- 第三方模块（由第三方开发出来的模块，不是官方提供的，也不是用户创建的，使用前需下载）
+
+1.加载模块
+
+使用 require() 方法
+
+注意：使用 require() 方法加载其它模块时，会执行被加载模块中的代码
+
+2.模块作用域
+
+和函数作用域类似，在自定义模块中定义的变量、方法等成员，只能在当前模块内被访问，这种模块级别的访问权限，叫做模块作用域。
+
+好处：防止了全局变量污染的问题
+
+3.向外共享模块作用域中的成员
+
+①module 对象
+
+在每个 .js 自定义模块中都有一个 module 对象，它里面存储了和当前模块有关的信息。
+
+②module.exports 对象
+
+在自定义模块中，可以使用 module.exports 对象，将模块内的成员共享出去，供外界使用。
+
+外界用 require() 方法导入自定义模块时，得到的就是 module.exports 所指向的对象
+
+③共享成员时的注意点
+
+使用 require() 方法导入模块时，导入的结果，永远以 module.exports 指向的对象为准
+
+④exports 对象
+
+默认情况下，exports 和 module.exports 指向同一个对象。
+
+误区：require() 模块时，得到的永远是 module.exports 指向的对象
+
+注意:为了防止混乱，不要在同一个模块中同时使用 exports 和 module.exports
+
+4.Node.js 中的模块化规范
+
+Node.js 遵循了 CommonJS 模块化规范，CommonJS 规定了模块的特性和各模块之间如何相互依赖
+
+CommonJs 规定：
+
+①每个模块内部，module 变量代表当前模块。
+
+②module 变量是一个对象，它的 exports 属性是对外的接口。
+
+③加载某个模块，其实是加载该模块的 module.exports 属性。
