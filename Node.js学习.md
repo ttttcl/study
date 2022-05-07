@@ -309,7 +309,7 @@ express.static()
 
 例：app.use(express.static('public'))
 
-# 8.Express 路由
+# 10.Express 路由
 
 1.路由的概念
 
@@ -335,7 +335,7 @@ express.static()
 
 ![image-20220505222022434](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220505222022434.png)
 
-# 9.Express中间件
+# 11.Express中间件
 
 1.1中间件的概念
 
@@ -449,7 +449,7 @@ next函数是实现多个中间件连续调用的关键，它表示把流转关�
 
 ③调用 app.use() 注册并使用中间件
 
-# 10.使用Express写接口
+# 12.使用Express写接口
 
 1.1创建基本的服务器
 
@@ -622,7 +622,7 @@ Accept、Accept-Language、Content-Language、DPR、Downlink、Save-Data、Viewp
 
 ![image-20220506213340323](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220506213340323.png)
 
-# 11.数据库的基本概念
+# 13.数据库的基本概念
 
 1.1什么是数据库
 
@@ -701,3 +701,131 @@ SELECT COUNT(*) FROM 表名称
 可以使用 AS 给查询出来的列名称设置别名
 
 SELECT COUNT(*) AS 别名 FROM 表名称
+
+# 14.前后端的身份认真
+
+1.Web开发模式
+
+目前主流的web 开发模式有两种，分别是：
+
+① 基于服务端渲染的传统 Web 开发模式
+
+② 基于前后端分离的新型 Web 开发模式
+
+1.1服务端渲染的Web 开发模式
+
+概念：服务器发送给客户端的 HTML 页面，是在服务器通过字符串的拼接，动态生成的。因此，客户端步需要使用 Ajax 这样的技术额外请求页面的数据。
+
+1.2服务端渲染的优缺点
+
+优点：
+
+① 前端耗时少。因为服务器端负责动态生成 HTML 页面，浏览器只需要直接渲染页面即可。
+
+② 有利于SEO。因为服务器端响应的是完整的 HTML 页面内容，所以爬虫更容易爬取获得信息。
+
+缺点：
+
+① 占用服务器端资源。即服务器端完成 HTML 页面内容的拼接，如果请求较多，会对服务器造成一定的访问压力。
+
+② 不利于前后端分离，开发效率低。使用服务器端渲染，则无法进行分工合作，尤其对于前端复杂度高的项目，不利于项目高效开发。
+
+1.3前后端分离的Web 开发模式
+
+概念：前后端分离的开发模式，依赖于 Ajax 技术的广泛应用。后端只负责提供API接口，前端使用Ajax 调用接口的开发模式。
+
+1.4前后端分离的优缺点
+
+优点：
+
+① 开发体验好。
+
+② 用户体验好。
+
+③ 减轻了服务器端的渲染压力。
+
+缺点:
+
+① 不利于SEO
+
+2.身份认证
+
+① 服务器端渲染推荐使用 Session 认证机制
+
+② 前后端分离推荐使用 JWT 认证机制
+
+3.Session 认证机制
+
+3.1HTTP 协议的无状态性
+
+指的是客户端的每次 HTTP 请求都是独立的，连续多个请求之间没有直接的关系，服务器不会主动保留每次 HTTP 请求的状态。
+
+使用 Cookie 可以突破 HTTP 无状态的限制
+
+3.2什么是Cookie
+
+Cookie是存储在用户浏览器中的一段不超过4 kb 的字符串。它由一个名称Name、一个值Value和其它几个用于控制Cookie 有效期、安全性、使用范围的可选属性组成。
+
+不同域名下的 Cookie 各自独立，每当客户端发起请求时，会自动把当前域名下所有未过期的Cookie一同发送到服务器。
+
+Cookie的几大特性：
+①自动发送
+
+②域名独立
+
+③过期时限
+
+④4kb 限制
+
+3.3Cookie 在身份认证中的作用
+
+客户端第一次请求服务器的时候，服务器通过响应头的形式，向客户端发送一个身份认证的 Cookie，客户端会自动将 Cookie 保存在服务器中。
+
+随后，当客户端浏览器每次发送请求服务器的时候，浏览器会自动将身份认证相关的Cookie，通过请求头的形式发送给服务器，服务器即可验明客户端的身份。
+
+3.4Cookie 不具有安全性
+
+由于Cookie 是存储在浏览器中的，而且浏览器也提供了读写Cookie的API，因此Cookie 很容易被伪造，不具有安全性。因此不建议服务器将重要的隐私数据，通过Cookie 的形式发送给服务器。
+
+3.5Session 的工作原理
+
+![image-20220507210702452](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220507210702452.png)
+
+3.6Session 认证的局限性
+
+Session 认证机制需要配合 Cookie 才能实现。由于 Cookie 默认不支持跨域访问，所以，当涉及到前端跨域请求后端接口的时候，需要做很多额外的配置，才能实现跨域Session 认证
+
+注意：当前端请求后端接口不存在跨域问题的时候，推荐使用Session 身份认证机制。
+
+当前端需要跨域请求后端接口的时候，推荐使用JWT 认证机制。
+
+4.1什么是JWT
+
+JWT 是目前最流行的跨域认证解决方案
+
+4.2JWT的工作原理
+
+![image-20220507212116611](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220507212116611.png)
+
+用户的信息通过 Token 字符串的形式，保存在客户端浏览器中。服务器通过还原 Token 字符串的形式来认证用户的身份。
+
+4.3 JWT的组成部分
+
+JWT 通常由三部分组成，分别是 Header头部、Payload有效荷载、Signature签名。
+
+三者之间用英文的"." 分隔
+
+4.4JWT的三个部分各自代表的含义
+
+Payload 部分才是真正的用户信息，它是用户信息经过加密之后生成的字符串
+
+Header 和Signature 是安全性相关的部分，只是为了保证 Token 的安全性
+
+4.5JWT 的使用方式
+
+客户端收到服务器返回的JWT 之后，通常会把它存储在 localStorage 或 sessionStorage 中。
+
+此后，客户端每次与服务器通信，都要带上这个 JWT 的字符串，从而进行身份认证。推荐的做法是把JWT 放在HTTP 请求头的Authorization 字段中，格式如下：
+
+Authorization : Bearer <token>
+
